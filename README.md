@@ -1,5 +1,5 @@
 # Curve Fit and Training Model Project
-Author: Samantha Reksosamudra
+Author: Samantha E. Reksosamudra
 
 ### Abstract
 The goal of this project was to develop and train a machine learning model to predict the best fit model for a given objective function by computing its least-squares error and optimizing the parameters of the fitted model. Three models were used in comparison with each other: linear fit, parabola fit, and 19th degree polynomial fit. All models were trained and tested with a set of data, and linear fit was the best model. The linear fit model provided a minimum error of 8.87% and 4.46% in two different sets of training and test datas.
@@ -27,10 +27,20 @@ $E = \sqrt{(1/n)\Sigma_{j=1}^n(f(x_j)-y_j)^2}$
 Three fit models were used to create a fit through the datapoints: linear fit, parabola fit, and a 19th degree polynomial fit. The algorithm for linear and parabola fit uses hyperparameter optimization techniques to optimize the model's performance. For the 19th degree polynomial fit, we used a built-in numpy module called the np.polyfit to determine the set of optimized parameters for the model. 
 
 ### Sec. III Algorithm Implementation
+  ### Computed Minimum Error and Parameter Values
+  Using the least-squares error function, the computed minimum error and parameter values are given as below.
+  ```
+  Minimum error:  1.592725853040056
+A:  2.1716818723637914
+B:  0.9093249029166655
+C:  0.7324784894461773
+D:  31.45291849616531
+  ```
   ### 2D Loss Landscape of Parameter Pairs
   Before we start training data models, the least-squares error function was used to generate a 2D loss (error) landscape by fixing two parameters and sweeping across the other parameters. Using pcolor, we visualized the loss landscapes in a grid as we sweep through values of different combinations of parameter pairs. This visualization helped to see the local minima of errors as we fix and sweep through different combinations of parameter pairs. 
 
 ![objective function image](./obj_function.png)
+
 
   ### Train Model Using Training Datapoints
 Suppose we use the first 20 datapoints as the first set of training data. 
@@ -108,10 +118,12 @@ Error of parabola fit: 4.419167987022885
 Error of polynomial fit: 4.761602026870715
 ```
  
-The training model for linear fit provided the best results with minimum errors for both sets of test data. This result shows that **the linear fit provided the best predictions for the given dataset's behavior**, compared with the parabola fit and 19th degree polynomial fit.
+The training model for linear fit provided the best results with minimum errors for both sets of test data. This result shows that **the linear fit provided the best predictions for the given dataset's behavior**, compared with the parabola fit and 19th degree polynomial fit. Also, it is interesting to note that the error computed when we used the first 10 and last 10 datapoins is less than when the first 20 datapoints were used. 
 
 ### Sec. V. Summary and Conclusions
+This project has explored some algorithms and computational methods used to develop and train a machine learning model. Using least-squares error method, we computed the minimum error and found the parameter values to use in the objective function. By fixing and sweeping through different combination of parameter pairs, and visualized it on a plot, we found the local minima of errors in each combination of parameter pairs. Using hyperparameter tuning to get optimized results of the model fits (i.e. linear fit, parabola fit, and 19th degree polynomial fit), it is found that linear fit was the best fit for this dataset. 
 
+The dataset given in this project was relatively less complex compared with real-world data, which is still possible to predict using a linear fit. Although linear fit is a good general practice to create model fits, some complex cases need better, and highly computational models to create the training model. 
 
 
 
