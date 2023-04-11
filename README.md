@@ -39,7 +39,7 @@ D:  31.45291849616531
   ### 2D Loss Landscape of Parameter Pairs
   Before we start training data models, the least-squares error function was used to generate a 2D loss (error) landscape by fixing two parameters and sweeping across the other parameters. Using pcolor, we visualized the loss landscapes in a grid as we sweep through values of different combinations of parameter pairs. This visualization helped to see the local minima of errors as we fix and sweep through different combinations of parameter pairs. 
 
-![objective function image](./obj_function.png)
+![](loss_landscape.png)
 
 
   ### Train Model Using Training Datapoints
@@ -71,11 +71,11 @@ s1 = res_l.x
 
 Then, we plot the training datapoints with the model fit with optimized parameters. Below is the first set of training datapoints plotted with the linear fit, parabola fit, and the 19th degree polynomial fit.
 
-![objective function image](./obj_function.png)
+![](first_set_training.png)
 
 Then we repeat the same process, but using the first 10 and last 10 datapoints as the second set of training data for the three model fits. Below is the second set of training datapoints plotted with the linear fit, parabola fit, and the 19th degree polynomial fit.
 
-![objective function image](./obj_function.png)
+![](second_set_training.png)
 
 ### Sec. IV. Computational Results
   ### Compute Minimum Error Using Test Datapoints
