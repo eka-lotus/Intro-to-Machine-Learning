@@ -1,14 +1,14 @@
 # SVD and Yale Faces
 Author: Samantha E. Reksosamudra
 
-### Abstract
+## Abstract
 The goal of this project was to use SVD and apply it to the Yale Faces database (attached in this branch as yalefaces.mat) to find the correlation between each faces and the six most dominant feature spaces. By taking a sample of faces and computing the correlation matrix, it is found that the strongest correlation lies in the faces that are diagonal with each other. To find the six most dominant feature spaces, we can use the dot product and compute the eigenvectors or use SVD and extract the eigenvectors. The absolute value of norm of difference of the first eigenvector from the first and second method 
 are calculated to be 2.0. It is also found that the percentage of variance captured by the six SVD modes ranged from 1.5% to 16.6%.
 
-### Sec. I. Introduction and Overview
+## Sec. I. Introduction and Overview
 This project explores how to apply SVD to the Yale Faces database and find the most dominant feature spaces by extracting the eigenvectors of the orthogonal matrices. We will compare the SVD method with the manual eigenvectors method, and compute the norm of difference and the percentage of variance of the SVD modes. This project also explores the correlation matrix application and  how each faces correlate with each other.
 
-### Sec. II. Theoretical Background
+## Sec. II. Theoretical Background
 The Yale Faces data has a total of 39 different faces with about 65 lighting scenes for each face, so it is 2414 faces in total. The individual images are columns of the matrix X, where each image has been downsampled to 32 × 32 pixels and converted into gray scale with values between 0 and 1. So the matrix's  size 1024 × 2414. 
 
 Singular Value Decomposition (SVD) is a matrix factorization technique that decomposes a matrix into three matrices. It is used in various fields such as image processing, signal processing, and machine learning. Given a matrix X, SVD decomposes the matrix into the form X = USVt, where U and V are orthogonal matrices, and S is a diagonal matrix with non-negative values on the diagonal. The eigenvectors inside the orthogonal matrices are the principal component directions, which are also used in this project as the most dominant feature spaces of the faces. We can also compute the eigenvectors of the matrix X and extract the top eigenvectors to find the the principal component directions. 
@@ -16,7 +16,7 @@ Singular Value Decomposition (SVD) is a matrix factorization technique that deco
 On the other hand, we can find the correlation matrix by taking the dot product of the sample data or use the Pearson correlation coefficient formula. The Pearson correlation is one of the most common way of measuring a linear correlation. It ranges from -1 to 1 and measures the strength and direction of the relationship between two variables. 
 
 
-### Sec. III Algorithm Implementation
+## Sec. III Algorithm Implementation
   ### Compute The Correlation Matrix
   Firstly, we extract 100 samples of faces, then compute the correlation matrix using ```np.matmul```:
   
@@ -146,7 +146,7 @@ plt.show()
   variance_percentage = (S[:6]*2 / np.sum(S*2)) * 100
   ```
   
-### Sec. IV. Computational Results
+## Sec. IV. Computational Results
   ### Correlation Matrix Plot 
   Below is the correlation matrix plotted using ```pcolor``` with values ranging from 0 to around 250.
 ![](correlation_matrix_plot_1.png)
@@ -172,7 +172,7 @@ The first row shows the two most correlated images, while the second row shows t
   ### Eigenvectors
   After we compute the eigenvectors, we extracted the top six eigenvectors from Method 1 and Method 2. The shape of both matrices were 1024x6. And the norm of difference of the first eigenvectors' absolute values from both methods was calculated to be 2.0
   
-  # Percentage of Variance of First Six SVD Modes
+  ### Percentage of Variance of First Six SVD Modes
   From the algorithm in Section III, the percentage of variance was calculated and the results are shown as below.
   ```
   Percentage of variance captured by each of the first 6 SVD modes:
@@ -181,8 +181,14 @@ The first row shows the two most correlated images, while the second row shows t
   
   The percentage of variance ranged from 1.5% to 16.6%.
   
+  ### Plot the First Six SVD Modes 
+  Then, we plotted the six SVD modes, which has the most dominant feature spaces (i.e. the face attributes that stand out more).
+  
+  ![](six_svd_modes.png)
+  
+  
 
-### Sec. V. Summary and Conclusions
+## Sec. V. Summary and Conclusions
 The SVD technique is an easy tool to decompose a matrix, and its application towards image processing and machine learning in this project has helped to find the most dominant feature spaces (i.e. most important attributes of faces). Using correlation coefficients, we can also see the relationship between images and find the most correlated images as the highest coefficient value (and the most uncorrelated image as the lowest coefficient value).
 
 
