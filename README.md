@@ -1,17 +1,18 @@
 # Curve Fit and Training Model Project
 Author: Samantha E. Reksosamudra
 
-### Abstract
+## Abstract
 The goal of this project was to develop and train a machine learning model to predict the best fit model for a given objective function by computing its least-squares error and optimizing the parameters of the fitted model. Three models were used in comparison with each other: linear fit, parabola fit, and 19th degree polynomial fit. All models were trained and tested with a set of data, and linear fit was the best model. The linear fit model provided a minimum error of 8.87% and 4.46% in two different sets of training and test datas.
 
-### Sec. I. Introduction and Overview
+## Sec. I. Introduction and Overview
 Curve fitting is one of the fundamental training models used in machine learning, and there are many training model fits used to predict situations in the real world. So this project explores a couple of algorithm and computational methods to find the best fit for a random dataset that provides the minimum error.
 
 The following code was written in Python and was used to develop a training model for a given objective function as shown below. 
+
 $f(x) = A\cos(Bx) + Cx + D$
 
 
-### Sec. II. Theoretical Background
+## Sec. II. Theoretical Background
 Machine learning algorithms are increasingly being used to solve complex real-world problems, including predicting how a mathematical model behaves. In this project, a random dataset of 31 datapoints was given 
 
 ```
@@ -26,7 +27,7 @@ $E = \sqrt{(1/n)\Sigma_{j=1}^n(f(x_j)-y_j)^2}$
 
 Three fit models were used to create a fit through the datapoints: linear fit, parabola fit, and a 19th degree polynomial fit. The algorithm for linear and parabola fit uses hyperparameter optimization techniques to optimize the model's performance. For the 19th degree polynomial fit, we used a built-in numpy module called the np.polyfit to determine the set of optimized parameters for the model. 
 
-### Sec. III Algorithm Implementation
+## Sec. III Algorithm Implementation
   ### Computed Minimum Error and Parameter Values
   Using the least-squares error function, the computed minimum error and parameter values are given as below.
   ```
@@ -77,7 +78,7 @@ Then we repeat the same process, but using the first 10 and last 10 datapoints a
 
 ![](second_set_training.png)
 
-### Sec. IV. Computational Results
+## Sec. IV. Computational Results
   ### Compute Minimum Error Using Test Datapoints
   Using the remaining 10 datapoints as test data, we tested the training model to those datapoints and compute the minimum error. Below are the least-squares error of the three model fits, with linear fit being the best model fit with least error for the **first** set of training data
 ```
@@ -120,7 +121,7 @@ Error of polynomial fit: 4.761602026870715
  
 The training model for linear fit provided the best results with minimum errors for both sets of test data. This result shows that **the linear fit provided the best predictions for the given dataset's behavior**, compared with the parabola fit and 19th degree polynomial fit. Also, it is interesting to note that the error computed when we used the first 10 and last 10 datapoins is less than when the first 20 datapoints were used. 
 
-### Sec. V. Summary and Conclusions
+## Sec. V. Summary and Conclusions
 This project has explored some algorithms and computational methods used to develop and train a machine learning model. Using least-squares error method, we computed the minimum error and found the parameter values to use in the objective function. By fixing and sweeping through different combination of parameter pairs, and visualized it on a plot, we found the local minima of errors in each combination of parameter pairs. Using hyperparameter tuning to get optimized results of the model fits (i.e. linear fit, parabola fit, and 19th degree polynomial fit), it is found that linear fit was the best fit for this dataset. 
 
 The dataset given in this project was relatively less complex compared with real-world data, which is still possible to predict using a linear fit. Although linear fit is a good general practice to create model fits, some complex cases need better, and highly computational models to create the training model. 
