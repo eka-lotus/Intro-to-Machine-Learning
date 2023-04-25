@@ -64,7 +64,9 @@ X_t = X.T
   projected_data = np.dot(X_t.T, Vt_modes)
   ```
   ### LDA Classifier for Two Digits
-  Firstly, the dataset was projected onto a PCA space to reduce the dimensionality of the data. I chose to classify between digit 0 and 1, so I extract the images with the respective labels, and split the data into training and testing sets:
+  Firstly, the dataset was projected onto a PCA space to reduce the dimensionality of the data. I chose to classify between digit 0 and 1, so I extract the images with the respective labels, and split the data into training and testing sets.
+  
+  I used ```n_components=10``` which means I reduced the dimension of the data into 10-D. This resulted in a faster analysis computation, however the accuracy score will not be as high compared with if we project the data on a higher dimension.
   
   ```
   # Perform PCA to reduce the dimensionality of the data
