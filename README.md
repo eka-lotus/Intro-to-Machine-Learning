@@ -10,6 +10,10 @@ This project explores how to apply SVD to the MNIST dataset, and train the datas
 ## Sec. II. Theoretical Background
 The MNIST dataset is a large database containing 70,000 images (28 x 28) of handwritten digits from 0 to 9. It is often used for traning and testing in image processing and machine learning. Based on each image's labels, we can train and classify each image to predict the a given image's label (or also called as cluster). 
 
+Using KMeans (another clustering method), these are the clusters for each digits in the MNIST dataset, where each cluster represents a digit. 
+
+![](mnist_clusters.png)
+
 If we are separating only two digits, then a linear classifier (LDA) could be an effective method to classify the training data. While SVM and Decision Tree Classifiers are some popular methods (until 2014) to classify and separate the dataset based on their labels. 
 
 ## Sec. III Algorithm Implementation
@@ -85,7 +89,6 @@ X_t = X.T
   # Stack the data and labels of digit 0 and 1 into one array
   X_train = np.vstack([X_train_0, X_train_1])
   y_train = np.hstack([y_train_0, y_train_1])
-  
   ```
   
   The training data was given to the LDA classifier method to train the model. Then we tested the model on the remaining test data and see how well it predicted the images in the test data based on the accuracy score:
@@ -112,21 +115,131 @@ X_t = X.T
   The same process can be done to classify between three digits. This can be done by adding the data and label of the third digit that is extracted from the original dataset. 
  
  ### Finding the Hardest and Easiest Digit Pairs to Separate
+ Using a for loop, we will go through every digit pairs from 0 to 9 and compute the accuracy score for each digit pairs. The hardest digit pairs to separate is the one with the lowest accuracy score, while the easiest to separate is the one with the highest accuracy score. 
  
+ ```
+ # Create an empty dictionary for accuracy scores of each digit pairs
+ accuracy_scores_lda = {}
+ 
+ # Create a list of combinations of all digit pairs from 0 to 9
+ digit_pairs = list(combinations(range(10), 2))
+ 
+ # Train a binary classifier for each pair of digit
+ for pair in digit_pairs:
+     X_pair = X_pca_train[(y == (pair[0])) | (y == (pair[1]))]
+     y_pair = y[(y == (pair[0])) | (y == (pair[1]))]
+
+     # Split the whole dataset into training and testing sets
+     X_train, X_test, y_train, y_test = train_test_split(X_pair, y_pair, test_size=0.2, random_state=42)
+
+     clf = LinearDiscriminantAnalysis()
+     clf.fit(X_train, y_train)
+     y_pair_pred = clf.predict(X_test)
+     accuracy = accuracy_score(y_test, y_pair_pred)
+     accuracy_scores_lda[pair] = accuracy
+
+ # Print the hardest and easiest pairs of digits to separate
+ hardest_pair = min(accuracy_scores, key=accuracy_scores_lda.get)
+ easiest_pair = max(accuracy_scores, key=accuracy_scores_lda.get)
+ print('Hardest pair:', hardest_pair, 'Accuracy:', accuracy_scores_lda[hardest_pair])
+ print('Easiest pair:', easiest_pair, 'Accuracy:', accuracy_scores_lda[easiest_pair])
+ ```
+ ### Accuracy Comparison Between SVM, LDA, and Decision Tree Classifiers
+ 
+ Below are some codes to train an SVM, LDA, and Decision Tree Classifiers to the training data. After training the data, then we tested them on the test data and compute the accuracy for each classifier method to compare which method is better to classify the digits in the MNIST dataset.
+ 
+ Train using SVM:
+ ```
+ # Train an SVM classifier on the training set
+ clf = svm.SVC(kernel='linear', C=1)
+ clf.fit(X_train, y_train)
+ ```
+ 
+ Train using LDA:
+ 
+ ```
+ # Train a LDA classifier on the PCA-transformed data
+ clf = LinearDiscriminantAnalysis()
+ clf.fit(X_train, y_train)
+ ```
+ 
+ Train using Decision Tree Classifier:
+ 
+ ```
+ # Train a decision tree classifier on the training set
+ clf = DecisionTreeClassifier(max_depth=10)
+ clf.fit(X_train, y_train)
+ ```
   
 ## Sec. IV. Computational Results
-  ### Correlation Matrix Plot 
-
-
-![](correlated_faces.png)
-
-
-![](uncorrelated_faces.png)
-
+  ### Six SVD Modes of the MNIST Dataset
+  
+  Based on a previous project, I found the six modes of the MNIST dataset that has the most importance in determining the digit labels. The images below show the most important features in the MNIST dataset.
+  
+  ![](svd_modes.png)
+  
+  
+  ### Singular Value Spectrum Plot
+  
+  Below is the singular value spectrum (the matrix S from the SVD analysis) plot. This graph tells us how large the variation of each feature plays in the structure of the data. The variation decreases exponentially as the index increases. Here, we can see that about 100 modes have significant variation. So around 100 modes are necessary for good image reconstruction.
+  
+  ![](singular_value_spec.png)
  
+ This relates to the rank r in digit space which we will use when performing PCA onto the MNIST dataset. So analysis on the MNIST dataset in 100-D (dimension) would give a relatively good image reconstruction and better accuracy scores to predict the digit images.
+ 
+ ### Projection on the V-modes
+ After projecting the dataset onto the selected V-modes (e.g. 2,3, and 5), we plotted the datapoints colored by their digit labels as shown below. 
+ 
+ ![](3d_projection.png)
+ 
+ From the plot, we can see how each images of digits cluster based on the V-modes.
+ 
+ ### Accuracy Score of LDA with Two and Three Digits
+ When training the data for digit 0 and 1 using LDA, we found an overal accuracy of 99.6%. The accuracy score is pretty high due to the significant difference between 0 and 1 (i.e. it's easy to differentiate between 0 and 1 because 0 is like a circle, while 1 is like a line).
+ 
+ ```
+ Accuracy on digit 0: 0.993
+ Accuracy on digit 1: 1.000
+ Overall accuracy: 0.996
+ 
+ ```
+ 
+ When training the data for three digits, the overall accuracy score decreased. In this case, I chose digit 0, 1 and 3. Since LDA classifies the data using a line, there may be some datapoints which are not perfectly classified to their respective actual labels. But overall, the accuracy score is still good with a score of 95.4%.
+ 
+ ```
+ Accuracy on digit 0: 0.937
+ Accuracy on digit 1: 0.992
+ Accuracy on digit 3: 0.931
+ Overall accuracy: 0.954
+ ```
+ 
+ ### Comparison Between SVM, LDA, and Decision Tree Classifiers
+ After using a classifier method on the training dataset and predict the test datasets for all the digits, the accuracy score was computed for SVM, LDA, and Decision Tree Classifiers. It is found that SVM, LDA, and Decision Tree Classifiers have an accuracy score of 83.8%, 79.5%, and 77.0% respectively. Although it took the longest time to compute, the most accurate classifier method is SVM.
+ 
+ ### Hardest and Easiest Pair of Digits to Separate
+ The following shows the hardest pair and easiest pair of digits to separate alongside their accuracy score for each classifier method. 
+ 
+ ```
+ # SVM method
+ Hardest pair: (4, 9) Accuracy: 0.8382299601015597
+ Easiest pair: (0, 1) Accuracy: 0.9989851150202977
+
+ # LDA method
+ Hardest pair: (4, 9) Accuracy: 0.8375045339136743
+ Easiest pair: (0, 1) Accuracy: 0.9969553450608931
+ 
+ # Decision Tree Classifier method
+ Hardest pair: (4, 9) Accuracy: 0.863619876677548
+ Easiest pair: (0, 1) Accuracy: 0.9959404600811907
+ ```
+The results were consistent with 4 and 9 being the hardest pair of digits to separate and 0 and 1 being the easiest pair of digits to separate. Althought the accuracy scores are similar, the SVM method shows a slightly better accuracy score with 83.8% for the hardest pair and 99.9 for the easiest pair. 
+
+On the bar graph plot below, we can see the sorted accuracy score for all digit pairs. 
+
+![](digitPairs_accuracyScores.png)
 
 ## Sec. V. Summary and Conclusions
-The SVD technique is an easy tool to decompose a matrix, and its application towards image processing and machine learning in this project has helped to find the most dominant feature spaces (i.e. most important attributes of faces). Using correlation coefficients, we can also see the relationship between images and find the most correlated images as the highest coefficient value (and the most uncorrelated image as the lowest coefficient value).
+The SVD analysis is an effective method to find the most important features that structures a dataset. We found there are about 100 modes that are significantly important in the MNIST dataset. And we also tried different classifier methods on the dataset, where we found SVM to be the best predictor with the highest accuracy score compared with LDA and Decision Tree Classifiers. It is also interesting to see the digit pairs that are the hardest (4 and 9) and easiest (0 and 1) to separate in the dataset using classifier methods. 
 
 
 
