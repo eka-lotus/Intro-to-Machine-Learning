@@ -2,7 +2,7 @@
 Author: Samantha E. Reksosamudra
 
 ## Abstract
-The goal of this project is to train a feed forward neural network with two types of dataset: a given array in class and the MNIST dataset. Then we test the neural network and compare the least square errors of two training/testing approaces for the given array dataset. The results correspond to a previous exercise (HW 1 - Curve Fit Training Models) where the least squares error is significantly smaller when we train the model with the first and last 10 datapoints (LSE: 20.62) compared with the first 20 datapoints (LSE: 1666.60). We also compared the accuracies of the neural network against the LSTM (Long Short Term Memory), SVM (Support Vector Machine), and Decision Tree classifiers. 
+The goal of this project is to train a feed forward neural network with two types of dataset: a given array in class and the MNIST dataset. Then we test the neural network and compare the least square errors of two training/testing approaces for the given array dataset. The results correspond to a previous exercise (HW 1 - Curve Fit Training Models) where the least squares error is significantly smaller when we train the model with the first and last 10 datapoints (LSE: 20.62) compared with the first 20 datapoints (LSE: 1666.60). We also compared the accuracies of the neural network against the LSTM (Long Short Term Memory), SVM (Support Vector Machine), and Decision Tree classifiers. It is found that feed forward neural network, LSTM, SVM, and decision tree classifiers have an accuracy score of 96.1%, 98.05%, 90.59%, and 79.44% respectively. Although it took the longest time to compute, the most accurate is LSTM.
  
 ## Sec. I. Introduction and Overview
 Feed forward neural networks are a popular type of neural network for solving machine learning tasks, such as classification, regression, and prediction. In this project, we will train a feed forward neural network with a given array and the MNIST dataset. The goal is to optimize the network's parameters and architecture to achieve the smallest error and highest possible accuracy on a test set. 
@@ -317,13 +317,41 @@ print('Accuracy:', accuracy)
 ```
   
 ## Sec. IV. Computational Results
-  ### 
+  ### Least Squares Error Computation for the Given Dataset in Class
+  The least squares error for the first and second training set are shown as below:
+  ```
+  # For the first training set (first 20 datapoints) 
+  Least squares error of 10 test data: 1666.5953369140625
+  ``` 
+  ```
+  # For the second training set (first and last 10 datapoints) 
+  Least squares error of 10 test data: 20.624591827392578
+  ```
+ This result corresponds to the result in one of the previous project (HW1 - Curve Fit Training Models) where the error computation of the second training set is significantly less than the first training set. This proves that the feed forward neural network provides a consistent result with curve fitting. 
  
- ### Comparison Between SVM, LDA, and Decision Tree Classifiers
- After using a classifier method on the training dataset and predict the test datasets for all the digits, the accuracy score was computed for SVM, LDA, and Decision Tree Classifiers. It is found that SVM, LDA, and Decision Tree Classifiers have an accuracy score of 83.8%, 79.5%, and 77.0% respectively. Although it took the longest time to compute, the most accurate classifier method is SVM.
+ ### Accuracy Scores of Neural Network, LSTM, SVM, and Decision Tree Classifiers
+ After using neural network architectures and classifier methods on the training dataset and predict the test datasets for all the digits, the accuracy score was computed for feed forward neural network, LSTM, SVM, and decision tree classifiers.  he accuracy score of the neural network, LSTM, SVM and decision tree classifiers for the MNIST dataset are shown as below:
+ ```
+ # Feed Forward Neural Network
+ Accuracy of the network on the 10000 test images: 96.1 %
+ ``` 
+  ```
+ # LSTM
+ Accuracy of the model on the 10000 test images: 98.05 %
+ ``` 
+  ```
+ # SVM
+ Accuracy: 0.9058571428571428
+ ``` 
+  ```
+ # Decision Tree Classifier
+ Accuracy: 0.7943571428571429
+ ```
  
- 
+ ### Comparison Between Neural Network, LSTM, SVM, and Decision Tree Classifiers
+ It is found that feed forward neural network, LSTM, SVM, and decision tree classifiers have an accuracy score of 96.1%, 98.05%, 90.59%, and 79.44% respectively. Although it took the longest time to compute, the most accurate is LSTM.
 
+ 
 ## Sec. V. Summary and Conclusions
-The SVD analysis is an effective method to find the most important features that structures a dataset. We found there are about 100 modes that are significantly important in the MNIST dataset. And we also tried different classifier methods on the dataset, where we found SVM to be the best predictor with the highest accuracy score compared with LDA and Decision Tree Classifiers. It is also interesting to see the digit pairs that are the hardest (4 and 9) and easiest (0 and 1) to separate in the dataset using classifier methods. 
+The feed forward neural network is an effective method to train datasets. It is also found that the results from doing feed forward neural network corresponds to curve fitting. And we also tried another neural network architecture (LSTM) and classifier methods such as SVM and decision tree classifiers. The best model found in this project was LSTM.
 
